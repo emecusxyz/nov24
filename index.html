@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Azure Static Website</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+ 
+    <header>
+<h1>🚀 Welcome to My Azure Static Website</h1>
+<p>This site is hosted on Azure Blob Storage (<code>$web</code> container).</p>
+</header>
+ 
+    <main>
+<section class="card">
+<h2>About</h2>
+<p>
+                This website is served from an Azure Storage Account using the Static Website feature.
+                All files like <strong>index.html</strong>, <strong>styles.css</strong>,
+<strong>script.js</strong>, and images are stored inside the <code>$web</code> container.
+</p>
+</section>
+ 
+        <section class="card">
+<h2>How It Works</h2>
+<ul>
+<li>Upload content into <code>$web</code> container</li>
+<li>Azure serves it via a public URL</li>
+<li>No server or backend required</li>
+</ul>
+</section>
+ 
+        <section class="card">
+<h2>Test JavaScript</h2>
+<button id="btn">Click Me</button>
+<p id="msg"></p>
+</section>
+</main>
+ 
+    <footer>
+<p>© 2025 My Azure Website</p>
+</footer>
+ 
+    <script src="script.js"></script>
+</body>
+</html>
