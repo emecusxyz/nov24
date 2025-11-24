@@ -1,0 +1,54 @@
+name: Create Azure VM
+
+on:
+  workflow_dispatch:   # so you can trigger it manually
+  push:
+    branches: [ "main" ]
+
+jobs:
+  create-vm:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Login to Azure using SPN
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Create Resource Group (if not exists)
+    - name: Create Resource Group
+      run: |
+        az group create \
+          --name ${{ secrets.AZ_RG }} \
+          --location ${{ secrets.AZ_LOCATION }}
+
+    # Create VM
+    - name: Create Virtual Machine
+      run: |
+        az vm create \
+          --resource-group ${{ secrets.AZ_RG }} \
+          --name ${{ secrets.VM_NAME }} \
+          --image Ubuntu2204 \
+          --size Standard_B1s \
+          --admin-username azureuser \
+          --generate-ssh-keys
+
+    # Optional: Open port 80
+    - name: Allow HTTP traffic
+      run: |
+        az vm open-port \
+          --port 80 \
+          --resource-group ${{ secrets.AZ_RG }} \
+          --name ${{ secrets.VM_NAME }}
+
+    # Print public IP
+    - name: Get VM Public IP
+      run: |
+        az vm list-ip-addresses \
+          --resource-group ${{ secrets.AZ_RG }} \
+          --name ${{ secrets.VM_NAME }} \
+          -o table
